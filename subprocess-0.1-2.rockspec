@@ -1,10 +1,10 @@
 -- This file was automatically generated for the LuaDist project.
 
 package = "subprocess"
-version = "0.1-1"
+version = "0.1-2"
 -- LuaDist source
 source = {
-  tag = "0.1-1",
+  tag = "0.1-2",
   url = "git://github.com/LuaDist-testing/subprocess.git"
 }
 -- Original source
@@ -23,12 +23,24 @@ description = {
    homepage = "http://github.com/hishamhm/subprocess",
    license = "MIT/X11 + PSF License Agreement for Python 3.4.3"
 }
+supported_platforms = {
+   "unix" -- at this point. "windows" also planned.
+}
 dependencies = {
    -- "typedlua" -- build time only
+   platforms = {
+      unix = {
+         "luaposix >= 33.3.1"
+      }
+   }
 }
 external_dependencies = {
-   SYS_SYSCALL = {
-      header = "sys/syscall.h"
+   platforms = {
+      unix = {
+         SYS_SYSCALL = {
+            header = "sys/syscall.h"
+         }
+      }
    }
 }
 build = {
@@ -41,6 +53,12 @@ build = {
       LUA_INCDIR="$(LUA_INCDIR)",
       INST_LIBDIR="$(LIBDIR)",
       INST_LUADIR="$(LUADIR)",
-      SYSCALL_INCDIR="$(SYS_SYSCALL_INCDIR)",
+   },
+   platforms = {
+      unix = {
+         variables = {
+            SYSCALL_INCDIR="$(SYS_SYSCALL_INCDIR)",
+         }
+      }
    }
 }
